@@ -1,0 +1,43 @@
+트랜잭션:DBMS에서 데이터를 다루는 논리적인 작업의 단위
+트랜잭션은 전체가 수행되거나 또는 전혀 수행되지 않아야함
+ex)은행 업무를 보는데 A 계좌(박지성)에서 b계좌(김연아)로 10,000원을 이체할 경우
+ex)
+BEGIN
+                      //1 a계좌(박지성)에서 쓰는 등등의 update문
+                      //2 위와 같이 b에서 쓰는 b계좌 등등의 update문
+END
+
+
+//오손읽기
+//실스 테이블 생성
+BEGIN TRANSACTION
+USE madang;
+Drop TABLE User;
+  idINTEGER,
+  nameVARCHAR(20),
+  ageINTEGER);
+
+INSERT INTO Users VALUES(1,'HOMG GILDONG',30);
+
+SELECT*
+FROM Users;
+
+COMMIT;
+
+
+//반복 불가능 읽기 T1(읽는 트랜잭션)
+READ COMMITED 모드
+
+BEGIN TRANSACTION
+USE madang;
+SET TRANSACTION ISOLATION LEVEL
+READ COMMITED;
+
+SELECT*
+FROM Users;
+WHERE id=1;
+
+
+
+//유령데이터 읽기: 다시 한 번 반복할 경우 이전에 없던 데이터가 나타나느 현상을 유령데이터읽기라 함
+
